@@ -1,26 +1,24 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [Creative](http://startbootstrap.com/template-overviews/creative/)
-
-[Creative](http://startbootstrap.com/template-overviews/creative/) is a one page creative theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
+# [sp365.pro](http://sp365.pro/) - [using Bootstrap](http://startbootstrap.com/)
 
 ## Getting Started
 
 To begin using this template, choose one of the following options to get started:
-* [Download the latest release on Start Bootstrap](http://startbootstrap.com/template-overviews/creative/)
-* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-creative.git`
+* [Download the latest release from Git](https://github.com/jsnl85/sp365.pro/)
+* Clone the repo: `git clone https://github.com/jsnl85/sp365.pro.git`
 * Fork the repo
 
 ## Bugs and Issues
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-creative/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/creative/).
+Have a bug or an issue with this template? [Open a new issue](https://github.com/jsnl85/sp365.pro/issues) here on GitHub or leave a comment on the [overview page](https://github.com/jsnl85/sp365.pro/).
 
 ## Creator
 
-Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
+sp365.pro is the personal website of **[Joao Lopes](http://sp365.pro/)**, a SharePoint & Office 365 Developer.
 
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
+* https://twitter.com/jsnl85
+* https://github.com/jsnl85
 
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+This project is based on the [Start Bootstrap](http://startbootstrap.com/) framework, and uses the [Creative template] (https://github.com/BlackrockDigital/startbootstrap-creative/).
 
 ## Copyright and License
 
