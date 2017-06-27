@@ -159,6 +159,7 @@ header {
   text-align: center;
   color: white;
 }
+header .img-responsive {margin: 0 auto 20px;}
 header .header-content {
   position: relative;
   text-align: center;
