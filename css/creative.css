@@ -415,3 +415,69 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #222222;
 }
+.contacts a{text-decoration:none;color:#000}
+.social-networks ul{list-style-type:none;padding:0}
+.social-networks li a+a{padding-left:10px}
+aside + aside{
+  padding-top:0;
+}
+.testimonials {
+  text-align: center; }
+  .testimonials .testimonials-carousel .item .testimonial-img {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px; }
+    .testimonials .testimonials-carousel .item .testimonial-img img {
+      vertical-align: baseline; }
+  .testimonials .testimonials-carousel .item .testimonial-author {
+    display: inline-block; }
+    .testimonials .testimonials-carousel .item .testimonial-author .name {
+      font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 900;
+      text-transform: uppercase; }
+    .testimonials .testimonials-carousel .item .testimonial-author hr.colored {
+      max-width: 50px;
+      margin: 3px auto; }
+    .testimonials .testimonials-carousel .item .testimonial-author p {
+      margin: 0; }
+    .testimonials .testimonials-carousel .item .testimonial-author .stars {
+      color: #f1c40f; }
+  @media (min-width: 992px) {
+    .testimonials .testimonials-carousel .item {
+      padding: 0 100px; } }
+
+.owl-carousel.owl-theme .owl-controls {
+  margin-top: 0; }
+  .owl-carousel.owl-theme .owl-controls .owl-prev,
+  .owl-carousel.owl-theme .owl-controls .owl-next {
+    font-size: 30px !important;
+    line-height: 50px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    height: 60px;
+    margin: auto 0 !important;
+    text-align: center;
+    color: white !important;
+    border-radius: 0 !important;
+    background-color: #EF4035 !important;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    transition: all .5s; }
+    .owl-carousel.owl-theme .owl-controls .owl-prev:hover,
+    .owl-carousel.owl-theme .owl-controls .owl-next:hover {
+      opacity: 1; }
+  .owl-carousel.owl-theme .owl-controls .owl-prev {
+    left: 15px; }
+  .owl-carousel.owl-theme .owl-controls .owl-next {
+    right: 15px; }
+  .owl-carousel.owl-theme .owl-controls .owl-page span {
+    background: rgba(34, 34, 34, 0.5); }
+
+.owl-carousel.owl-theme.portfolio-carousel .owl-controls .owl-prev {
+  left: 0; }
+
+.owl-carousel.owl-theme.portfolio-carousel .owl-controls .owl-next {
+  right: 0; }
