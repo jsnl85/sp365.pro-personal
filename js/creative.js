@@ -5,6 +5,22 @@
     var getJson = function(url, callback){$.ajax({type:"GET",url:url,dataType:"json",cache:true,async:true,success:callback});}
     var getHtml = function(url, callback){$.ajax({type:"GET",url:url,dataType:"html",cache:true,async:true,success:callback});}
 
+    // Initialise the Metatags section
+    getHtml("seo/meta.min.html?v3", function(data) {
+        var $el = $('<div/>').html(data), html = $el.html();
+        $(document).ready(function() {
+            $("head").append(html);
+        });
+    });
+
+    //// Initialise the Json+Ld
+    //var jsonLds = ["seo/identity.ld.json?v1","seo/website.ld.json?v1","seo/place.ld.json?v1"];
+    //for(var i in jsonLds){
+    //    getJson(jsonLds[i], function(data){
+    //        $("<script/>", {"type":"application/ld+json","html":JSON.stringify(data)}).appendTo("head");
+    //    });
+    //}
+
     // Initialise the MainNav section
     var $mainNav = $("#mainNav");
     if ($mainNav.length > 0) {

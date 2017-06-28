@@ -33,3 +33,12 @@ SetOutputFilter DEFLATE
 
 #Alternate default index pages
 DirectoryIndex index.min.html index.html
+
+# BEGIN GZIP
+<ifmodule mod_deflate.c>
+AddOutputFilterByType DEFLATE \
+	text/plain text/text text/html text/plain text/xml text/css \
+	application/json application/rss+xml application/x-javascript application/javascript \
+	font/otf font/ttf
+</ifmodule>
+# END GZIP
