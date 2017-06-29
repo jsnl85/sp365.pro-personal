@@ -12,11 +12,10 @@
 <title>sp365.pro</title>
 <style>.hide{display:none}header{background-color:#4a423f;}</style>
 
-<!-- Pace loading - ->
-<script src="vendor/pace/pace.min.js?v1" data-pace-options='{"ajax":true,"restartOnPushState":false,"restartOnRequestAfter":false}'></script>
+<!-- Pace loading -->
+<script src="vendor/pace/pace.min.js?v1" data-pace-options='{"ajax":true,"restartOnPushState":false,"restartOnRequestAfter":false,"elements":{"selectors":[".window-loaded"]}}'></script>
 <link href="vendor/pace/themes/pace-theme-center-atom.min.css?v1" rel="stylesheet" />
 <style>.pace-running{background-color:#4a423f;}.pace-running>*:not(.pace){display:none}</style>
--->
 
 <!-- Bootstrap Core CSS -->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -104,11 +103,14 @@
 <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
 <!-- Theme JavaScript -->
-<script src="js/creative.min.js?v1.2"></script>
+<script src="js/creative.min.js?v1.2"></script>-->
+
+<!-- Bundle JavaScript - ->
+<script defer src="bundle/all.min.js?v1.2"></script>-->
 
 <script>
-(function(){var tmp=window.onload;window.onload=function(){tmp && tmp();document.body.className=document.body.className.replace("window-loading","");}})();
-(function(){document.body.className=document.body.className.replace("dom-loading","");})();
+(function(){var tmp=window.onload;window.onload=function(){tmp && tmp();document.body.className=document.body.className.replace("window-loading","")+" window-loaded";}})();
+(function(){document.body.className=document.body.className.replace("dom-loading","")+" dom-loaded";})();
 </script>
 
 </body>
