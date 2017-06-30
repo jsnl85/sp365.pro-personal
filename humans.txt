@@ -2,11 +2,10 @@
 
 João Samuel Nunes Lopes
 Contact: joao.samuel.lopes [at] gmail.com
-Site: http://sp365.pro
+Site: https://sp365.pro
 Location: Melbourne, Australia
 
 /* SITE */
 
 Standards: HTML5, CSS3
 Components: Bootstrap, HTML, Javascript
-<!-- Cached direct 2017-06-27 00:00:00, displayed 2017-06-27 00:00:00, generated in 0s -->

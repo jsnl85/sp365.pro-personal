@@ -1,4 +1,4 @@
-# [sp365.pro](http://sp365.pro/) - [using Bootstrap](http://startbootstrap.com/)
+# [sp365.pro](https://sp365.pro/) - [using Bootstrap](http://startbootstrap.com/)
 
 ## Getting Started
 
@@ -13,7 +13,7 @@ Have a bug or an issue with this template? [Open a new issue](https://github.com
 
 ## Creator
 
-sp365.pro is the personal website of **[Joao Lopes](http://sp365.pro/)**, a SharePoint & Office 365 Developer.
+sp365.pro is the personal website of **[Joao Lopes](https://sp365.pro/)**, a SharePoint & Office 365 Developer.
 
 * https://twitter.com/jsnl85
 * https://github.com/jsnl85
