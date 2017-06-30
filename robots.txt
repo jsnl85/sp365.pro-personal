@@ -5,4 +5,3 @@ Disallow: /tmp/
 Disallow: /logs/
 Disallow: /indexed_files/
 Disallow: /web.config
-Disallow: /\.*
