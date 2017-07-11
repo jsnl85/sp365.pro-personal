@@ -37,7 +37,7 @@ SetOutputFilter DEFLATE
 </FilesMatch>
 
 #Alternate default index pages
-DirectoryIndex index.min.html index.html
+DirectoryIndex app_offline.htm index.min.html index.html
 
 # BEGIN GZIP
 <ifmodule mod_deflate.c>
