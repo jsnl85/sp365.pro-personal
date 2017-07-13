@@ -5,9 +5,6 @@
     "password": "",
     "host": "",
     "port": 21,
-    "remoteFolder": "/public_html",
-    "localFilesGlob": [
-      "./**/*"
-    ]
+    "remoteFolder": "/public_html"
   }
 }

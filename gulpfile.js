@@ -127,6 +127,31 @@ function getFtpConnection(cfgFtp) {
         log: console.log
     });
 }
+function getFtpFilesToUpload(cfgFtp) {
+    //var localFilesGlob = [ "./**/*" ];
+    var localFilesGlob = [
+        '*',
+        'css/**',
+        '!design',
+        'favicon/**',
+        'img/**',
+        'js/**',
+        '!less',
+        '!node_modules',
+        'sections/**',
+        'seo/**',
+        'vendor/**',
+        '!.gitignore',
+        '!config*.json',
+        '!package*.json',
+        '!gulpfile.js',
+        '!license',
+        '!readme*',
+        '!settings.js'
+        //'!web.config'
+    ];
+    return localFilesGlob;
+}
 
 /**
  * Deploy task.
@@ -139,8 +164,9 @@ gulp.task('ftp-deploy', ['configure'], function() {
     var cfgFtp = cfg.ftp; //(cfg||{}).ftp||((cfg||{}).ftp||[])[0]||{};
     // 
     var conn = getFtpConnection(cfgFtp);
+    var localFilesGlob = getFtpFilesToUpload(cfgFtp);
     // 
-    return gulp.src(cfgFtp.localFilesGlob, { base: '.', buffer: false })
+    return gulp.src(localFilesGlob, { base: '.', buffer: false })
         .pipe( conn.newer( cfgFtp.remoteFolder ) ) // only upload newer files 
         .pipe( conn.dest( cfgFtp.remoteFolder ) )
     ;
@@ -157,16 +183,18 @@ gulp.task('ftp-deploy-watch', ['configure'], function() {
     var cfgFtp = cfg.ftp; //(cfg||{}).ftp||((cfg||{}).ftp||[])[0]||{};
     // 
     var conn = getFtpConnection(cfgFtp);
+    var localFilesGlob = getFtpFilesToUpload(cfgFtp);
     // 
-    gulp.watch(cfgFtp.localFilesGlob)
-    .on('change', function(event) {
-      console.log('Changes detected! Uploading file "' + event.path + '", ' + event.type);
+    gulp.watch(localFilesGlob)
+      .on('change', function(event) {
+        console.log('Changes detected! Uploading file "' + event.path + '", ' + event.type);
 
-      return gulp.src( [event.path], { base: '.', buffer: false } )
-        .pipe( conn.newer( cfgFtp.remoteFolder ) ) // only upload newer files 
-        .pipe( conn.dest( cfgFtp.remoteFolder ) )
-      ;
-    });
+        return gulp.src( [event.path], { base: '.', buffer: false } )
+          .pipe( conn.newer( cfgFtp.remoteFolder ) ) // only upload newer files 
+          .pipe( conn.dest( cfgFtp.remoteFolder ) )
+        ;
+      })
+    ;
 });
 
 
