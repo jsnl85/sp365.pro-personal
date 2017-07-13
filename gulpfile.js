@@ -1,10 +1,26 @@
+// npm install gulp lodash fs gulp-less gulp-header gulp-clean-css gulp-rename webpack-stream gulp-uglify gulp-javascript-obfuscator browser-sync owl.carousel vinyl-ftp
+
+// Task Scripts
 var gulp = require('gulp');
+const _ = require('lodash');
+const fs = require('fs');
 var less = require('gulp-less');
 var browserSync = require('browser-sync').create();
 var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
+var webpack = require('webpack-stream');
 var uglify = require('gulp-uglify');
+const obfuscator = require('gulp-javascript-obfuscator');
+const vinylFtp = require('vinyl-ftp');
+// Styles
+//const sass = require('gulp-sass');
+//const bless = require('gulp-bless');
+//const imgmin = require('gulp-imagemin');
+// linting (TODO)
+//const parker = require('gulp-parker');
+//const sasslint = require('gulp-sass-lint');
+// Configuration
 var pkg = require('./package.json');
 
 // Set the banner content
@@ -15,6 +31,27 @@ var banner = ['/*!\n',
     ' */\n',
     ''
 ].join('');
+
+// Create the Configuration.json file
+gulp.task('configure', function() {
+    var cfgDefaults = require('./configuration.defaults.json');
+    // 
+    // ensure configuration.json file exists (i.e. it is in .gitignore)
+    if(!fs.existsSync('configuration.json')) { const cfgDefaultsContent = fs.readFileSync('./configuration.defaults.json'); fs.writeFileSync('configuration.json', cfgDefaultsContent); }
+    cfg = require('./configuration.json');
+    // 
+    // apply new properties to Configuration.json file
+    cfg = _.defaultsDeep(cfg, cfgDefaults);
+    try {
+        const cfgContent = JSON.stringify(cfg, null, 2);
+        const cfgContentCurrent = fs.readFileSync('./configuration.json');
+        if (cfgContent != cfgContentCurrent) {
+            fs.writeFileSync('./configuration.json', cfgContent, 'utf-8');
+            console.log("Updated configuration.json file");
+        }
+    }
+    catch (err) { console.log('Error writing Configuration.json:' + err.message); }
+});
 
 // Compile LESS files from /less into /css
 gulp.task('less', function() {
@@ -73,10 +110,68 @@ gulp.task('copy', function() {
             '!node_modules/font-awesome/*.json'
         ])
         .pipe(gulp.dest('vendor/font-awesome'))
+
+    //gulp.src(['node_modules/owl.carousel/dist/*.js', 'node_modules/owl.carousel/dist/assets/*'])
+    //    .pipe(gulp.dest('vendor/owl.carousel'))
 })
 
+// FTP Configuration
+// helper function to build an FTP connection based on our configuration
+function getFtpConnection(cfgFtp) {
+    return vinylFtp.create({
+        host: cfgFtp.host,
+        port: cfgFtp.port,
+        user: cfgFtp.username, //process.env.FTP_USER
+        password: cfgFtp.password, //process.env.FTP_PWD
+        parallel: 5,
+        log: console.log
+    });
+}
+
+/**
+ * Deploy task.
+ * Copies the new files to the server
+ *
+ * Usage: `FTP_USER=someuser FTP_PWD=somepwd gulp ftp-deploy`
+ */
+gulp.task('ftp-deploy', ['configure'], function() {
+    var cfg = require('./configuration.json');
+    var cfgFtp = cfg.ftp; //(cfg||{}).ftp||((cfg||{}).ftp||[])[0]||{};
+    // 
+    var conn = getFtpConnection(cfgFtp);
+    // 
+    return gulp.src(cfgFtp.localFilesGlob, { base: '.', buffer: false })
+        .pipe( conn.newer( cfgFtp.remoteFolder ) ) // only upload newer files 
+        .pipe( conn.dest( cfgFtp.remoteFolder ) )
+    ;
+});
+
+/**
+ * Watch deploy task.
+ * Watches the local copy for changes and copies the new files to the server whenever an update is detected
+ *
+ * Usage: `FTP_USER=someuser FTP_PWD=somepwd gulp ftp-deploy-watch`
+ */
+gulp.task('ftp-deploy-watch', ['configure'], function() {
+    var cfg = require('./configuration.json');
+    var cfgFtp = cfg.ftp; //(cfg||{}).ftp||((cfg||{}).ftp||[])[0]||{};
+    // 
+    var conn = getFtpConnection(cfgFtp);
+    // 
+    gulp.watch(cfgFtp.localFilesGlob)
+    .on('change', function(event) {
+      console.log('Changes detected! Uploading file "' + event.path + '", ' + event.type);
+
+      return gulp.src( [event.path], { base: '.', buffer: false } )
+        .pipe( conn.newer( cfgFtp.remoteFolder ) ) // only upload newer files 
+        .pipe( conn.dest( cfgFtp.remoteFolder ) )
+      ;
+    });
+});
+
+
 // Run everything
-gulp.task('default', ['less', 'minify-css', 'minify-js', 'copy']);
+gulp.task('default', ['configure', 'less', 'minify-css', 'minify-js', 'copy']);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
@@ -88,7 +183,7 @@ gulp.task('browserSync', function() {
 })
 
 // Dev task with browserSync
-gulp.task('dev', ['browserSync', 'less', 'minify-css', 'minify-js'], function() {
+gulp.task('dev', ['browserSync', 'configure', 'less', 'minify-css', 'minify-js'], function() {
     gulp.watch('less/*.less', ['less']);
     gulp.watch('css/*.css', ['minify-css']);
     gulp.watch('js/*.js', ['minify-js']);

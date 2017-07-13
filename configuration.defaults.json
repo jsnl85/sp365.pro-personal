@@ -1,0 +1,13 @@
+{
+  "portal": "sp365.pro",
+  "ftp": {
+    "username": "",
+    "password": "",
+    "host": "",
+    "port": 21,
+    "remoteFolder": "/public_html",
+    "localFilesGlob": [
+      "./**/*"
+    ]
+  }
+}
