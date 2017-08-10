@@ -135,6 +135,8 @@ function getFtpFilesToUpload(cfgFtp) {
     //var localFilesGlob = [ "./**/*" ];
     var localFilesGlob = [
         '*',
+        '.htaccess',
+        '!app_offline.htm',
         'contacts/**',
         'css/**',
         '!design',
