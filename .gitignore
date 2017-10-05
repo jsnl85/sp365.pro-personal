@@ -8,3 +8,6 @@ logs
 indexed_files
 package-lock.json
 configuration.json
+add-ins/src/packages
+add-ins/src/*/Web.*.config
+*.pubxml*
