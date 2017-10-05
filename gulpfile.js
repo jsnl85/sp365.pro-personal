@@ -138,6 +138,7 @@ function getFtpFilesToUpload(cfgFtp) {
         '.htaccess',
         '!app_offline.htm',
         'add-ins/**',
+        '!add-ins/src',
         'bundle/**', //'!bundle',
         //'contacts/**',
         'css/**',
