@@ -1,0 +1,7 @@
+# enable directory indexing
+Options +Indexes
+
+#enable CORS
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
