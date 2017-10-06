@@ -4,7 +4,7 @@
     "name": "sp-365-extension-application-customiser-client-side-solution",
     "id": "398099f4-e409-4309-8b57-ba1e47e7db97",
     "version": "1.0.0.0",
-    "skipFeatureDeployment": true,
+    "skipFeatureDeployment": false,
     "features": [{
       "title": "SP365 Application Customizer",
       "description": "Adds some JavaScript to every page in the site.",
