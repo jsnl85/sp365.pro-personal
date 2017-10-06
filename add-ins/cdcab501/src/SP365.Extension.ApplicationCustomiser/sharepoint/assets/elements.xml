@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <CustomAction
+        Title="COB Global JS"
+        Location="ClientSideExtension.ApplicationCustomizer"
+        ClientSideComponentId="bff4db75-2ec7-49ee-84ea-f9698da91d06"
+        ClientSideComponentProperties="{&quot;companyName&quot;:&quot;sp365.pro&quot;,&quot;uniqueId&quot;:&quot;cdcb95cd&quot;,&quot;version&quot;:&quot;1.0.0.0&quot;}">
+    </CustomAction>
+</Elements>

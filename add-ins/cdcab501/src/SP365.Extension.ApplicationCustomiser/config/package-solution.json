@@ -1,0 +1,23 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "sp-365-extension-application-customiser-client-side-solution",
+    "id": "398099f4-e409-4309-8b57-ba1e47e7db97",
+    "version": "1.0.0.0",
+    "skipFeatureDeployment": true,
+    "features": [{
+      "title": "SP365 Application Customizer",
+      "description": "Adds some JavaScript to every page in the site.",
+      "id": "398099f4-9f44-4681-9143-bd2e774afbfc",
+      "version": "1.0.0.0",
+      "assets": {        
+        "elementManifests": [
+          "elements.xml"
+        ]
+      }
+    }]
+  },
+  "paths": {
+    "zippedPackage": "solution/sp-365-extension-application-customiser.sppkg"
+  }
+}

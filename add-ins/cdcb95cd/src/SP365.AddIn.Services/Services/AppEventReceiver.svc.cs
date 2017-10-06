@@ -9,6 +9,8 @@ namespace SP365.AddIn.Services
 {
     public class AppEventReceiver : IRemoteEventService
     {
+        private const string SCRIPT_SRC = "https://sp365.pro/add-ins/", SCRIPT_PATH = "/cdn/js/sp365.min.js";
+
         public SPRemoteEventResult ProcessEvent(SPRemoteEventProperties properties)
         {
             if (properties == null) { throw new ArgumentNullException(nameof(properties)); }
@@ -25,7 +27,7 @@ namespace SP365.AddIn.Services
                 Guid uniqueInstanceId = new Guid("cdcb95cd-16ee-409e-8a99-f4642c84591a"); //var web = ctx.Web; ctx.Load(web); ctx.ExecuteQuery(); string webServerRelativeUrl = (web.ServerRelativeUrl ?? "/"); Guid webId = web.Id; Guid uniqueInstanceId = webId;
                 string uniqueInstanceWebFolderName = uniqueInstanceId.ToString().ToLowerInvariant().Substring(0, 8);
                 Version version = properties.AppEventProperties?.Version ?? new Version(1, 0, 0, 0);
-                string scriptSrc = $@"https://sp365.pro/add-ins/{uniqueInstanceWebFolderName}/{version}/js/sp365.min.js"; //string scriptSrc = $@"{webServerRelativeUrl.TrimEnd(new char[] { '/' })}/{UCA_WEBRELATIVEFOLDERPATH.Trim(new char[] { '/' })}/app.js?v={version}";
+                string scriptSrc = $@"{SCRIPT_SRC}{uniqueInstanceWebFolderName}/{version}{SCRIPT_PATH}"; //string scriptSrc = $@"{webServerRelativeUrl.TrimEnd(new char[] { '/' })}/{UCA_WEBRELATIVEFOLDERPATH.Trim(new char[] { '/' })}/app.js?v={version}";
                 const int sequence = 10;
                 // 
                 if (properties.EventType == SPRemoteEventType.AppInstalled || properties.EventType == SPRemoteEventType.AppUpgraded)
