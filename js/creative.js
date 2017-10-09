@@ -7,7 +7,7 @@
 	var config = window.creative||{}, version = config.version||'1.0';
 
 	/*// Initialise the Metatags section
-	getHtml("seo/meta.min.html?v="+version, function(data) {
+	getHtml("/seo/meta.min.html?v="+version, function(data) {
 		var $el = $('<div/>').html(data), html = $el.html();
 		$(document).ready(function() {
 			$("head").append(html);
@@ -15,7 +15,7 @@
 	});*/
 
 	/*// Initialise the Json+Ld
-	var jsonLds = ["seo/identity.ld.json?v="+version,"seo/website.ld.json?v="+version,"seo/place.ld.json?v="+version];
+	var jsonLds = ["/seo/identity.ld.json?v="+version,"/seo/website.ld.json?v="+version,"/seo/place.ld.json?v="+version];
 	for(var i in jsonLds){
 		getJson(jsonLds[i], function(data){
 			$("<script/>", {"type":"application/ld+json","html":JSON.stringify(data)}).appendTo("head");
@@ -25,7 +25,7 @@
 	// Initialise the MainNav section
 	var $mainNav = $("#mainNav");
 	if ($mainNav.length > 0) {
-		getHtml("sections/mainNav.min.html?v="+version, function(data) {
+		getHtml("/sections/mainNav.min.html?v="+version, function(data) {
 			var $el = $('<div/>').html(data), html = $el.find("#mainNav").html();
 			$mainNav.html(html);
 			// 
@@ -54,7 +54,7 @@
 	// Initialise the About section
 	var $about = $("#about");
 	if ($about.length > 0) {
-		getHtml("sections/about.min.html?v="+version, function(data) {
+		getHtml("/sections/about.min.html?v="+version, function(data) {
 			var $el = $('<div/>').html(data), html = $el.find("#about").html();
 			$about.html(html);
 		});
@@ -63,7 +63,7 @@
 	// Initialise the Services section
 	var $services = $("#services");
 	if ($services.length > 0) {
-		getHtml("sections/services.min.html?v="+version, function(data) {
+		getHtml("/sections/services.min.html?v="+version, function(data) {
 			var $el = $('<div/>').html(data), html = $el.find("#services").html();
 			$services.html(html);
 		});
@@ -72,7 +72,7 @@
 	// Initialise the Download section
 	var $download = $("#download");
 	if ($download.length > 0) {
-		getHtml("sections/download.min.html?v="+version, function(data) {
+		getHtml("/sections/download.min.html?v="+version, function(data) {
 			var $el = $('<div/>').html(data), html = $el.find("#download").html();
 			$download.html(html);
 		});
@@ -81,7 +81,7 @@
 	// Initialise the Testimonials section
 	var $recommendations = $("#recommendations");
 	if ($recommendations.length > 0) {
-		getHtml("sections/testimonials.min.html?v="+version, function(data) {
+		getHtml("/sections/testimonials.min.html?v="+version, function(data) {
 			var $el = $('<div/>').html(data), html = $el.find("#recommendations").html();
 			$recommendations.html(html);
 			// 
@@ -115,7 +115,7 @@
 	// Initialise the Contacts section
 	var $contacts = $("#contacts");
 	if ($contacts.length > 0) {
-		getHtml("sections/contacts.min.html?v="+version, function(data) {
+		getHtml("/sections/contacts.min.html?v="+version, function(data) {
 			var $el = $('<div/>').html(data), html = $el.find("#contacts").html();
 			$contacts.html(html);
 		});
