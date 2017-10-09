@@ -3,6 +3,10 @@
 #RewriteCond %{SERVER_PORT} 80 
 #RewriteRule ^(.*)$ https://sp365.pro/$1 [R=302,L]
 
+# Error pages
+ErrorDocument 403 /403.htm
+ErrorDocument 404 /404.htm
+
 # 1 YEAR
 ExpiresActive On
 <FilesMatch "\.(otf|ico|pdf|flv)$">

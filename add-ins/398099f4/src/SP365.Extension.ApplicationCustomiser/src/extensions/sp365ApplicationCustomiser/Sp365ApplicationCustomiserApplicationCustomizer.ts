@@ -6,7 +6,7 @@ import { Dialog } from '@microsoft/sp-dialog';
 import * as strings from 'Sp365ApplicationCustomiserApplicationCustomizerStrings';
 
 const LOG_SOURCE: string = 'Sp365ApplicationCustomiserApplicationCustomizer';
-const SCRIPT_SRC: string = 'https://sp365.pro/add-ins/', SCRIPT_PATH: string = '/cdn/js/sp365.min.js';
+const SCRIPT_SRC: string = 'https://sp365.pro/add-ins/', SCRIPT_PATH: string = '/cdn/sp365.min.js';
 
 export interface ISp365ApplicationCustomiserApplicationCustomizerProperties {
   companyName: string;
@@ -25,7 +25,7 @@ export default class Sp365ApplicationCustomiserApplicationCustomizer
     // load sp365.pro JS sript assynchronously...
     let uniqueId: string = this.properties.uniqueId || 'cdcb95cd';
     let version: string = this.properties.version || '1.0.0.0';
-    let scriptSrc: string = `${SCRIPT_SRC}${SCRIPT_SRC}${uniqueId}/${version}${SCRIPT_PATH}`;
+    let scriptSrc: string = `${SCRIPT_SRC}${uniqueId}${SCRIPT_PATH}?v=${version}`;
     let scriptTag: HTMLScriptElement = document.createElement("script"); scriptTag.type = "text/javascript"; scriptTag.src = scriptSrc; document.getElementsByTagName("head")[0].appendChild(scriptTag);
     Log.info(LOG_SOURCE, `onInit(): Added script link.`);
 

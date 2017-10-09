@@ -101,6 +101,7 @@
       <DependentUpon>AppEventReceiver.svc</DependentUpon>
     </Compile>
     <Compile Include="SharePointContext.cs" />
+    <Compile Include="SharePointExtensions.cs" />
     <Compile Include="TokenHelper.cs" />
   </ItemGroup>
   <PropertyGroup>

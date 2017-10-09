@@ -2,12 +2,17 @@
   "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
     "name": "sp-365-extension-application-customiser-client-side-solution",
+    "title": "SP365 Extension",
     "id": "398099f4-e409-4309-8b57-ba1e47e7db97",
     "version": "1.0.0.0",
+    "iconPath": "images/AppIcon.png",
+    "supportedLocales": [
+      "en-US"
+    ],
     "skipFeatureDeployment": false,
     "features": [{
-      "title": "SP365 Application Customizer",
-      "description": "Adds some JavaScript to every page in the site.",
+      "title": "SP365 Extension Application Customizer feature",
+      "description": "A feature that registers sp365.pro functionality on the SharePoint site.",
       "id": "398099f4-9f44-4681-9143-bd2e774afbfc",
       "version": "1.0.0.0",
       "assets": {        
@@ -18,6 +23,6 @@
     }]
   },
   "paths": {
-    "zippedPackage": "solution/sp-365-extension-application-customiser.sppkg"
+    "zippedPackage": "solution/SP365.Extension.sppkg"
   }
 }
