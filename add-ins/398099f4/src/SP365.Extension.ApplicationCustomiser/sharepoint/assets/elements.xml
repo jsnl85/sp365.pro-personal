@@ -8,7 +8,7 @@
     </CustomAction>
 
 <!--
-    NOTE: Any ScriptLink custom actions have to be deployed via CSOM/JSOM
+    NOTE: Any ScriptLink custom actions have to be deployed via the 'SP365.AddIn.app' package (i.e. which uses CSOM/JSOM to register ScriptLink CustomAction)
     <CustomAction
         Title="SP365 Extension - ScriptLink"
         Location="ScriptLink"
