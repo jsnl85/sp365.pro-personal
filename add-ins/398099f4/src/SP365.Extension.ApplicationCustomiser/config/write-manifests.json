@@ -1,6 +1,0 @@
-{
-  "$schema": "https://dev.office.com/json-schemas/spfx-build/write-manifests.schema.json",
-  "deployCdnPath": "https://sp365.pro/add-ins/",
-  "cdnBasePath": "https://sp365.pro/add-ins/",
-  "cdnUrlPrefix": "398099f4/cdn"
-}
