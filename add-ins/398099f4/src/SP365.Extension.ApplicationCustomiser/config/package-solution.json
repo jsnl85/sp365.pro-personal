@@ -2,7 +2,7 @@
   "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
     "name": "sp-365-extension-application-customiser-client-side-solution",
-    "title": "SP365 Extension",
+    "title": "SP365 Modern Add-In",
     "id": "398099f4-e409-4309-8b57-ba1e47e7db97",
     "version": "1.0.0.0",
     "iconPath": "images/AppIcon.png",
@@ -23,6 +23,6 @@
     }]
   },
   "paths": {
-    "zippedPackage": "../pkg/SP365.Extension.sppkg"
+    "zippedPackage": "../pkg/SP365.AddIn.sppkg"
   }
 }
