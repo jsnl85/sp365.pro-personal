@@ -15,7 +15,7 @@
       "description": "A feature that registers sp365.pro functionality on the SharePoint site.",
       "id": "398099f4-9f44-4681-9143-bd2e774afbfc",
       "version": "1.0.0.0",
-      "assets": {        
+      "assets": {
         "elementManifests": [
           "elements.xml"
         ]
@@ -23,6 +23,6 @@
     }]
   },
   "paths": {
-    "zippedPackage": "solution/SP365.Extension.sppkg"
+    "zippedPackage": "../pkg/SP365.Extension.sppkg"
   }
 }
