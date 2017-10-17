@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AutoResponder LastSave="2017-10-17T17:25:16.9485302+11:00" FiddlerVersion="4.6.20173.38786">
+  <State Enabled="true" Fallthrough="true" UseLatency="false">
+    <ResponseRule Match="REGEX:https://sp365.pro/add-ins/cdcb95cd/cdn/sp365(.min)?.js" Action="C:\inetpub\sp365\add-ins\cdcb95cd\cdn\sp365.js" Enabled="true" />
+    <ResponseRule Match="REGEX:https://sp365.pro/add-ins/cdcb95cd/cdn/sp365.tiles(.min)?.js" Action="C:\inetpub\sp365\add-ins\cdcb95cd\cdn\sp365.tiles.js" Enabled="true" />
+    <ResponseRule Match="REGEX:https://sp365.pro/add-ins/cdcb95cd/cdn/sp365.linkedin(.min)?.js" Action="C:\inetpub\sp365\add-ins\cdcb95cd\cdn\sp365.linkedin.js" Enabled="true" />
+  </State>
+</AutoResponder>
