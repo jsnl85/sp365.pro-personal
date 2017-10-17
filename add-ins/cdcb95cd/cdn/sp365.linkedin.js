@@ -16,9 +16,9 @@
 			var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container');
 			$container.detach();
 		};
-		var render = function() {
+		var renderButtons = function() {
+			destroyRenderContainer();
 			var $container = getRenderContainer();
-			// 
 			$container.append(
 				$('<div>').addClass('row-fluid').append(
 					$('<div>').addClass('col-md-12').append(
@@ -41,7 +41,7 @@
 				_m.allPromise([_m.requireJQuery(), _m.requireJQueryUI(), _m.requireAngular()]).then(function(result) {
 					$ = result[0], $ui = result[1], angular = result[2];
 					// 
-					try { render(); }
+					try { renderButtons(); }
 					catch(ex) { reject(ex.message); }
 					// 
 					_m.log('- inited a new instance of LinkedInConnectorWebPart on \''+ $wpConfig +'\'.');

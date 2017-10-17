@@ -16,9 +16,9 @@
 			var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container');
 			$container.detach();
 		};
-		var render = function() {
+		var renderTiles = function() {
+			destroyRenderContainer();
 			var $container = getRenderContainer();
-			// 
 		}
 		// 
 		// override methods
@@ -29,7 +29,7 @@
 				_m.allPromise([_m.requireJQuery(), _m.requireAngular()]).then(function(result) {
 					$ = result[0], angular = result[1];
 					// 
-					try { render(); }
+					try { renderTiles(); }
 					catch(ex) { reject(ex.message); }
 					// 
 					_m.log('- inited a new instance of SmartTilesWebPart on \''+ $wpConfig +'\'.');
