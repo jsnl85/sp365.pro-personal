@@ -7,18 +7,8 @@
 		var $ = null, $ui = null, angular = null;
 		// 
 		// auxiliaries
-		var getRenderContainer = function() {
-			var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container');
-			if($container.length == 0) { $container = $('<div>').addClass('sp365-wp-container').addClass('container-fluid'); $parent.append($container); }
-			return $container;
-		}
-		var destroyRenderContainer = function() {
-			var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container');
-			$container.detach();
-		};
 		var renderButtons = function() {
-			destroyRenderContainer();
-			var $container = getRenderContainer();
+			_wp.base.destroyRenderContainer(); var $container = _wp.base.getRenderContainer();
 			$container.append(
 				$('<div>').addClass('row-fluid').append(
 					$('<div>').addClass('col-md-12').append(

@@ -201,6 +201,92 @@
 	var newElementId = _m.newElementId = function() {
 		return (newId(8) + '_' + newId(4) + '_' + newId(4) + '_' + newId(4) + '_' + newId(12));
 	};
+	var getIncludedStyle = _m.getIncludedStyle = function(stylesheetId) {
+		var ret = null;
+		var styles = document.getElementsByTagName("style");
+		for (var i = 0; i < styles.length; i++) {
+			var style = styles[i];
+			if (style.id == stylesheetId) { ret = style; break; }
+		}
+		return ret;
+	}
+	var includeStyle = _m.includeStyle = function(stylesheetId, stylesheetBody) {
+		if (!stylesheetId || !stylesheetBody) { return; }
+		try {
+			var elStyle = getIncludedStyle(stylesheetId);
+			if (!elStyle) {
+				elStyle = document.createElement('style'); elStyle.id = stylesheetId; elStyle.type = "text/css";
+				if (elStyle.styleSheet) { elStyle.styleSheet.cssText = stylesheetBody; } else { elStyle.appendChild(document.createTextNode(stylesheetBody)); }
+				var elHead = document.getElementsByTagName('head')[0];
+				logVerbose('includeStyle() - Loaded Style \'' + stylesheetId + '\'');
+				elHead.appendChild(elStyle);
+			}
+			else {
+				if (elStyle.styleSheet) { elStyle.styleSheet.cssText = stylesheetBody; } else { if (elStyle.firstChild) { elStyle.removeChild(elStyle.firstChild); } elStyle.appendChild(document.createTextNode(stylesheetBody)); }
+				logVerbose('includeStyle() - Already referenced Style \'' + stylesheetId + '\'');
+			}
+		}
+		catch (ex) { logError('includeStyle() - Unexpected error: ' + ex, 'Error'); }
+	};
+	var removeStyle = _m.removeStyle = function(stylesheetId) {
+		if (!stylesheetId) { return; }
+		var elStyle = getIncludedStyle(stylesheetId);
+		if (elStyle) { elStyle.parentNode.removeChild(elStyle); }
+	}
+	var showProgress = _m.showProgress = function($el, showQ, color, label) {
+		ensureJQuery(function() {
+			$el = ($el || $('body'));
+			showQ = (showQ == undefined || showQ) ? true : false;
+			// 
+			// COMMENTED: previous solution dependent on kendo.ui
+			//if(typeof(kendo)!='undefined' && kendo.ui && kendo.ui.progress) { kendo.ui.progress($el, showQ); }
+			// 
+			var count = parseInteger($el.attr('showProgressCount')||'0');
+			if (showQ) {
+				$el.attr('showProgressCount', '' + (count + 1));
+				if (count > 0) { return; } // already showing...
+				// 
+				var $elLoading = $el.find('.loading,.loading-progress');
+				if ($elLoading.length > 0) { $elLoading.show(); }
+				else {
+					// CSS-only solution
+					if (!color) { color = 'rgb(51,51,51)'; } // #337ab7
+					if (label == undefined) { label = 'Loading...'; }
+					includeStyle('loading-progress-style', '\
+.loading-progress{display:flex;align-items:center;position:fixed;top:0px;left:0px;z-index:100;width:100%;height:100%;background-color:#fff;filter:alpha(opacity=30);opacity:.3;}\
+.loader,.loader:before,.loader:after{background:'+ color + ';-webkit-animation:load1 1s infinite ease-in-out;animation:load1 1s infinite ease-in-out;width:1em;height:4em;}\
+.loader{color:'+ color + ';text-indent:-9999em;margin:auto;font-size:11px;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0);-webkit-animation-delay:-0.16s;animation-delay:-0.16s;}\
+.loader:before,.loader:after{position:absolute;top:0;content:\'\';}\
+.loader:before{left:-1.5em;-webkit-animation-delay:-0.32s;animation-delay:-0.32s;}\
+.loader:after{left:1.5em;}\
+@-webkit-keyframes load1{\
+ 0%,80%,100%{box-shadow:0 0;height:4em;}\
+ 40%{box-shadow:0 -2em;height:5em;}\
+}\
+@keyframes load1{\
+ 0%,80%,100%{box-shadow:0 0;height:4em;}\
+ 40%{box-shadow:0 -2em;height:5em;}\
+}\
+'
+					);
+					$el.prepend('<div class="loading-progress"><div class="loader loading-label">' + label + '</div></div>');
+				}
+			}
+			else {
+				$el.attr('showProgressCount', '' + ((count > 0) ? (count - 1) : 0));
+				if (count > 1) { return; } // need to keep it showing...
+				// 
+				var $elLoading = $el.find('.loading');
+				if ($elLoading.length > 0) { $elLoading.hide(); }
+				else {
+					$elLoading = $el.find('.loading-progress');
+					$elLoading.detach();
+				}
+			}
+		});
+	}
+	var hideProgress = _m.hideProgress = function($el) { showProgress($el, false); }
+	// 
 	var tryParseJson = _m.tryParseJson = function(json) { var ret; try{ ret = JSON.parse(json); } catch(ex) { logVerbose('- could not parse JSON \''+ json +'\'. Error: '+ ex.message); } return ret; };
 	var trySerialiseJson = _m.tryParseJson = function(json) { var ret; try{ ret = JSON.stringify(json); } catch(ex) { logVerbose('- could not serialise object to JSON \''+ json +'\'. Error: '+ ex.message); } return ret; };
 	// 
@@ -209,40 +295,49 @@
 		// local variables
 		var _wp = this, _childWp = null;
 		var $wpConfig = $webpartConfig;
+		var $ = null;
 		// 
 		// methods
 		var getConfig = _wp.getConfig = function() { return tryParseJson($wpConfig.attr('sp365-wp')); }
 		var setConfig = _wp.setConfig = function(wpConfig) { var json = trySerialiseJson(wpConfig); if (json) { $wpConfig.attr('sp365-wp', json); } else { logWarning('- Could not set the BaseWebPart config because wpConfig could not be serialised to JSON.'); if (!isEditableQ()) { logVerbose('- NOTE: a call to BaseWebpart.setConfig() was done, but content is not editable.'); } } }
 		var isEditableQ = _wp.isEditableQ = function() { return tryParseJson($wpConfig.closest('[contenteditable]').attr('contenteditable')); }
+		var getRenderContainer = _wp.getRenderContainer = function() { var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container'); if($container.length == 0) { $container = $('<div>').addClass('sp365-wp-container').addClass('container-fluid'); $parent.append($container); } return $container; }
+		var destroyRenderContainer = _wp.destroyRenderContainer = function() { var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container'); $container.detach(); };
 		var init = _wp.init = function() {
 			var promise = newPromise(function(resolve, reject) {
-				var wpConfig = getConfig();
-				if (wpConfig) {
-					logVerbose('- loaded custom webpart from \''+ $wpConfig +'\' with config \''+ wpConfig +'\'.');
-					if (!wpConfig.id) { var $wpId = $wpConfig.closest('[webpartid]'), wpId = (($wpId.length == 1 && $wpId.find('sp365-wp').length == 1) ? 'wp_'+$wpId.attr('webpartid') : ''); if (!wpId) { wpId = 'wp_'+newElementId(); } wpConfig.id = wpId; setConfig(wpConfig); }
+				requireJQuery().then(function(jQuery) {
+					$ = jQuery;
 					// 
-					if (wpConfig.type) {
-						var customWebPartTypesMeta = [
-							{regex:/^LinkedInConnector$/gi,scriptId:'sp365.linkedin',scriptSrc:baseScriptFolderPath+'sp365.linkedin.min.js?'+scriptVersion,createNew:function(){return new WebParts.LinkedInConnectorWebPart(_wp, $wpConfig);}},
-							{regex:/^SmartTiles$/gi,scriptId:'sp365.tiles',scriptSrc:baseScriptFolderPath+'sp365.tiles.min.js?'+scriptVersion,createNew:function(){return new WebParts.SmartTilesWebPart(_wp, $wpConfig);}},
-						];
-						var meta = customWebPartTypesMeta.filter(function(meta){return (meta && meta.regex && meta.regex.test(wpConfig.type));})[0];
-						if (meta) {
-							try {
-								if (typeof(meta.createNew) != 'function') { throw 'createNew is not a function.'; }
-								require(meta.scriptId, meta.scriptSrc, true).then(function() {
-									_childWp = meta.createNew();
-									$wpConfig.find('.sp365-wp-description').hide();
-									_childWp.init().then(resolve, reject);
-								}, reject);
+					var wpConfig = getConfig();
+					if (wpConfig) {
+						logVerbose('- loaded custom webpart from \''+ $wpConfig +'\' with config \''+ wpConfig +'\'.');
+						if (!wpConfig.id) { var $wpId = $wpConfig.attr('id')||$wpConfig.closest('[webpartid]'), wpId = (($wpId.length == 1 && $wpId.find('sp365-wp').length == 1) ? 'wp_'+$wpId.attr('webpartid') : ''); if (!wpId) { wpId = 'wp_'+newElementId(); } wpConfig.id = wpId; setConfig(wpConfig); }
+						$wpConfig.attr('id', wpConfig.id);
+						includeStyle('hideWp_'+wpConfig.id, '#'+wpConfig.id+'{display:none}');
+						// 
+						if (wpConfig.type) {
+							var customWebPartTypesMeta = [
+								{regex:/^LinkedInConnector$/gi,scriptId:'sp365.linkedin',scriptSrc:baseScriptFolderPath+'sp365.linkedin.min.js?'+scriptVersion,createNew:function(){return new WebParts.LinkedInConnectorWebPart(_wp, $wpConfig);}},
+								{regex:/^SmartTiles$/gi,scriptId:'sp365.tiles',scriptSrc:baseScriptFolderPath+'sp365.tiles.min.js?'+scriptVersion,createNew:function(){return new WebParts.SmartTilesWebPart(_wp, $wpConfig);}},
+							];
+							var meta = customWebPartTypesMeta.filter(function(meta){return (meta && meta.regex && meta.regex.test(wpConfig.type));})[0];
+							if (meta) {
+								try {
+									if (typeof(meta.createNew) != 'function') { throw 'createNew is not a function.'; }
+									require(meta.scriptId, meta.scriptSrc, true).then(function() {
+										_childWp = meta.createNew();
+										//$wpConfig.find('.sp365-wp-description').hide();
+										_childWp.init().then(resolve, reject);
+									}, reject);
+								}
+								catch(ex) { reject('- error creating new instance of custom webpart from \''+ $wpConfig +'\'. Error: '+ex.message); }
 							}
-							catch(ex) { reject('- error creating new instance of custom webpart from \''+ $wpConfig +'\'. Error: '+ex.message); }
+							else { reject('- error loading custom webpart from \''+ $wpConfig +'\' because \'type\' was not recognised.'); }
 						}
-						else { reject('- error loading custom webpart from \''+ $wpConfig +'\' because \'type\' was not recognised.'); }
+						else { reject('- error loading custom webpart from \''+ $wpConfig +'\' because it did not define a \'type\'.'); }
 					}
-					else { reject('- error loading custom webpart from \''+ $wpConfig +'\' because it did not define a \'type\'.'); }
-				}
-				else { reject('- error loading custom webpart from \''+ $wpConfig +'\' because config was empty.'); }
+					else { reject('- error loading custom webpart from \''+ $wpConfig +'\' because config was empty.'); }
+				}, reject);
 			});
 			return promise;
 		}

@@ -7,18 +7,34 @@
 		var $ = null, angular = null;
 		// 
 		// auxiliaries
-		var getRenderContainer = function() {
-			var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container');
-			if($container.length == 0) { $container = $('<div>').addClass('sp365-wp-container').addClass('container-fluid'); $parent.append($container); }
-			return $container;
+		var getTiles = function() { return (($wpConfig && $wpConfig.data && Array.isArray($wpConfig.data)) ? newResolvedPromise($wpConfig.data) : newResolvedPromise([])); }
+		var renderLoading = function() {
+			_wp.base.destroyRenderContainer(); var $container = _wp.base.getRenderContainer();
+			$container.append(
+				$('<div>').addClass('row-fluid').append(
+					$('<div>').addClass('col-md-12').append(
+						$('<div>').addClass('loading description').html(
+							"Loading Tiles..."
+						)
+					)
+				)
+			);
 		}
-		var destroyRenderContainer = function() {
-			var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container');
-			$container.detach();
-		};
-		var renderTiles = function() {
-			destroyRenderContainer();
-			var $container = getRenderContainer();
+		var renderTiles = function(tiles) {
+			_wp.base.destroyRenderContainer(); var $container = _wp.base.getRenderContainer();
+			$container.append(
+				$('<div>').addClass('row-fluid').append(
+					$('<div>').addClass('col-md-12').append(
+						(tiles|[]).map(function(obj){
+							return $('<a>').prop('href',obj.url).append(
+								$('<div>').addClass('tile').append(
+									$('<div>').addClass('title').html(obj.title)
+								)
+							);
+						})
+					)
+				)
+			);
 		}
 		// 
 		// override methods
@@ -29,8 +45,15 @@
 				_m.allPromise([_m.requireJQuery(), _m.requireAngular()]).then(function(result) {
 					$ = result[0], angular = result[1];
 					// 
-					try { renderTiles(); }
-					catch(ex) { reject(ex.message); }
+					renderLoading();
+					// 
+					getTiles().then(function(tiles) {
+						try { renderTiles(tiles); }
+						catch(ex) { reject(ex.message); }
+					}, function(error) {
+						logError('- Could not load the Tiles data.');
+						reject(ex.message);
+					});
 					// 
 					_m.log('- inited a new instance of SmartTilesWebPart on \''+ $wpConfig +'\'.');
 					resolve();
