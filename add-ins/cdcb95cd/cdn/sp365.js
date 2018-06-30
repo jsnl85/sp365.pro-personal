@@ -69,7 +69,7 @@
 					}
 					else {
 						outcomes[refI] = promise; outcomesDefined[refI] = true;
-						resovleAllIfComplete();
+						if (allOutcomesComplete()) { resolve(outcomes); }
 					}
 				}
 			});
@@ -300,6 +300,9 @@
 		// methods
 		var getConfig = _wp.getConfig = function() { return tryParseJson($wpConfig.attr('sp365-wp')); }
 		var setConfig = _wp.setConfig = function(wpConfig) { var json = trySerialiseJson(wpConfig); if (json) { $wpConfig.attr('sp365-wp', json); } else { logWarning('- Could not set the BaseWebPart config because wpConfig could not be serialised to JSON.'); if (!isEditableQ()) { logVerbose('- NOTE: a call to BaseWebpart.setConfig() was done, but content is not editable.'); } } }
+		var disableRTE = _wp.disableRTE = function() {
+			$wpConfig.closest('.ms-rtestate-field,.ms-rtestate-write,.ms-rtestate-notify').remove('ms-rtestate-write').addClass('ms-rtestate-read').addClass('ms-rtepaste-remove');
+		}
 		var isEditableQ = _wp.isEditableQ = function() { return tryParseJson($wpConfig.closest('[contenteditable]').attr('contenteditable')); }
 		var getRenderContainer = _wp.getRenderContainer = function() { var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container'); if($container.length == 0) { $container = $('<div>').addClass('sp365-wp-container').addClass('container-fluid'); $parent.append($container); } return $container; }
 		var destroyRenderContainer = _wp.destroyRenderContainer = function() { var $parent = $wpConfig.closest('[webpartid]').parent(), $container = $parent.find('.sp365-wp-container'); $container.detach(); };
@@ -314,6 +317,7 @@
 						if (!wpConfig.id) { var $wpId = $wpConfig.attr('id')||$wpConfig.closest('[webpartid]'), wpId = (($wpId.length == 1 && $wpId.find('sp365-wp').length == 1) ? 'wp_'+$wpId.attr('webpartid') : ''); if (!wpId) { wpId = 'wp_'+newElementId(); } wpConfig.id = wpId; setConfig(wpConfig); }
 						$wpConfig.attr('id', wpConfig.id);
 						includeStyle('hideWp_'+wpConfig.id, '#'+wpConfig.id+'{display:none}');
+						disableRTE();
 						// 
 						if (wpConfig.type) {
 							var customWebPartTypesMeta = [
