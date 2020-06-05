@@ -4,6 +4,7 @@
   "bindings": [
     {
       "type": "httpTrigger",
+      "direction": "in",
       "methods": [
         "get",
         "post"
