@@ -3,6 +3,7 @@
   "name": "sp365pro-website",
   "title": "sp365.pro website",
   "version": "1.0.0",
+  "description": "Personal Website",
   "homepage": "https://sp365.pro",
   "author": "Joao Lopes",
   "license": "MIT",
