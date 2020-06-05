@@ -1,0 +1,18 @@
+{
+  "generatedBy": "Microsoft.NET.Sdk.Functions-1.0.31",
+  "configurationSource": "attributes",
+  "bindings": [
+    {
+      "type": "httpTrigger",
+      "methods": [
+        "get",
+        "post"
+      ],
+      "authLevel": "anonymous",
+      "name": "req"
+    }
+  ],
+  "disabled": false,
+  "scriptFile": "../bin/sp365.connectors.sharepoint.dll",
+  "entryPoint": "SP365.Connectors.SharePoint.Hello.Hello.Run"
+}
