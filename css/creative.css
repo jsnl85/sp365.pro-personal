@@ -1,7 +1,7 @@
 /*!
- * Start Bootstrap - sp365.pro website v3.3.7+1 (https://sp365.pro)
+ * Start Bootstrap - sp365.pro website v1.0.0 (https://sp365.pro)
  * Copyright 2013-2020 Joao Lopes
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ * Licensed under  ()
  */
 html,
 body {
@@ -492,9 +492,9 @@ aside + aside {
   color: white !important;
   border-radius: 0 !important;
   background-color: #EF4035 !important;
-  -webkit-transition: all .5s;
-  -moz-transition: all .5s;
-  transition: all .5s;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
 }
 .owl-carousel.owl-theme .owl-controls .owl-prev:hover,
 .owl-carousel.owl-theme .owl-controls .owl-next:hover {
