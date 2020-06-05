@@ -122,7 +122,7 @@
 	}
 
 	// On Window Load
-	$(window).load(function() {
+	$(window).on('load', function() {
 		// jQuery for page scrolling feature - requires jQuery Easing plugin
 		$(document).on('click', 'a.page-scroll', function(event) {
 			var $anchor = $(this);
@@ -158,5 +158,4 @@
 			});
 		}
 	});
-
 })(jQuery); // End of use strict
