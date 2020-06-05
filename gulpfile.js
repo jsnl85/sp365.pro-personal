@@ -216,9 +216,6 @@ gulp.task('ftp-deploy-watch', ['configure'], function() {
     ;
 });
 
-// Bundle
-gulp.task('bundle', []);
-
 // Build
 gulp.task('build', ['configure', 'less', 'minify-css', 'minify-js', 'copy']);
 
