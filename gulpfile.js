@@ -1,8 +1,9 @@
-// npm install gulp lodash fs gulp-less gulp-header gulp-clean-css gulp-rename webpack-stream gulp-uglify gulp-javascript-obfuscator browser-sync owl.carousel vinyl-ftp
+// npm install gulp lodash fs gulp-less gulp-header gulp-clean gulp-clean-css gulp-rename webpack-stream gulp-uglify gulp-javascript-obfuscator browser-sync owl.carousel vinyl-ftp
 
 // Task Scripts
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var clean = require('gulp-clean');
 const _ = require('lodash');
 const fs = require('fs');
 var less = require('gulp-less');
@@ -89,6 +90,12 @@ gulp.task('minify-js', function() {
         .pipe(browserSync.reload({
             stream: true
         }))
+});
+
+// Clean
+gulp.task('clean', function() {
+    return gulp.src('tmp/*', {read: false})
+    .pipe(clean());
 });
 
 // Copy vendor libraries from /node_modules into /vendor
@@ -209,9 +216,14 @@ gulp.task('ftp-deploy-watch', ['configure'], function() {
     ;
 });
 
+// Bundle
+gulp.task('bundle', []);
+
+// Build
+gulp.task('build', ['configure', 'less', 'minify-css', 'minify-js', 'copy']);
 
 // Run everything
-gulp.task('default', ['configure', 'less', 'minify-css', 'minify-js', 'copy']);
+gulp.task('default', ['clean', 'build']);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
