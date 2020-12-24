@@ -7,13 +7,13 @@ var clean = require('gulp-clean');
 const _ = require('lodash');
 const fs = require('fs');
 var less = require('gulp-less');
-var browserSync = require('browser-sync').create();
+//var browserSync = require('browser-sync').create();
 var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var webpack = require('webpack-stream');
 var uglify = require('gulp-uglify');
-const obfuscator = require('gulp-javascript-obfuscator');
+//const obfuscator = require('gulp-javascript-obfuscator');
 const vinylFtp = require('vinyl-ftp');
 // Styles
 //const sass = require('gulp-sass');
@@ -66,9 +66,9 @@ gulp.task('less', function() {
         }))
         .pipe(header(banner, { pkg: pkg }))
         .pipe(gulp.dest('css'))
-        .pipe(browserSync.reload({
-            stream: true
-        }))
+        //.pipe(browserSync.reload({
+        //    stream: true
+        //}))
     ;
 });
 
@@ -78,9 +78,9 @@ gulp.task('minify-css', gulp.series('less', function() {
         .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('css'))
-        .pipe(browserSync.reload({
-            stream: true
-        }))
+        //.pipe(browserSync.reload({
+        //    stream: true
+        //}))
     ;
 }));
 
@@ -91,9 +91,9 @@ gulp.task('minify-js', function() {
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('js'))
-        .pipe(browserSync.reload({
-            stream: true
-        }))
+        //.pipe(browserSync.reload({
+        //    stream: true
+        //}))
     ;
 });
 
@@ -231,23 +231,23 @@ gulp.task('build', gulp.series('configure', 'less', 'minify-css', 'minify-js', '
 gulp.task('default', gulp.series('clean', 'build'));
 
 // Configure the browserSync task
-gulp.task('browserSync', function() {
-    return browserSync.init({
-        server: {
-            baseDir: "",
-            index: "index.html"
-        }
-    });
-})
+// gulp.task('browserSync', function() {
+//     return browserSync.init({
+//         server: {
+//             baseDir: "",
+//             index: "index.html"
+//         }
+//     });
+// })
 
 // Dev task with browserSync
-gulp.task('dev', gulp.series('browserSync', 'less', 'minify-css', 'minify-js', function(done) {
+gulp.task('dev', gulp.series('less', 'minify-css', 'minify-js', function(done) { //'browserSync',
     gulp.watch('less/*.less', ['less']);
     gulp.watch('css/*.css', ['minify-css']);
     gulp.watch('js/*.js', ['minify-js']);
     // Reloads the browser whenever HTML or JS files change
-    gulp.watch('*.html', browserSync.reload);
-    gulp.watch('js/**/*.js', browserSync.reload);
+    //gulp.watch('*.html', browserSync.reload);
+    //gulp.watch('js/**/*.js', browserSync.reload);
     // 
     done();
 }));
