@@ -14,6 +14,7 @@ var rename = require("gulp-rename");
 var webpack = require('webpack-stream');
 var uglify = require('gulp-uglify');
 //const obfuscator = require('gulp-javascript-obfuscator');
+const htmlmin = require('gulp-htmlmin');
 const vinylFtp = require('vinyl-ftp');
 // Styles
 //const sass = require('gulp-sass');
@@ -97,25 +98,52 @@ gulp.task('minify-js', function() {
     ;
 });
 
+// Minify HTML
+gulp.task('minify-html', () => {
+    return gulp.src(['*.html','!*.min.html','**/*.html','!**/*.min.html'])
+        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest(function(file) { return file.base; }))
+        //.pipe(browserSync.reload({
+        //    stream: true
+        //}))
+    ;
+});
+
 // Clean
 gulp.task('clean', function() {
-    return gulp.src('tmp/*', {read: false})
+    return gulp.src(['tmp/*', 'css/*.min.css', 'js/*.min.js', '*.min.html', '**/*.min.html'], {read: false})
         .pipe(clean())
     ;
 });
 
 // Copy vendor libraries from /node_modules into /vendor
 gulp.task('copy', function(done) {
-    gulp.src(['node_modules/bootstrap/dist/**/*', '!**/npm.js', '!**/bootstrap-theme.*', '!**/*.map'])
+    gulp.src([
+            'node_modules/bootstrap/dist/**/*',
+            '!**/npm.js',
+            '!**/bootstrap-theme.*',
+            '!**/*.map'
+        ])
         .pipe(gulp.dest('vendor/bootstrap'))
 
-    gulp.src(['node_modules/jquery/dist/jquery.js', 'node_modules/jquery/dist/jquery.min.js'])
+    gulp.src([
+            'node_modules/jquery/dist/jquery.js',
+            'node_modules/jquery/dist/jquery.min.js',
+            '!**/*.map'
+        ])
         .pipe(gulp.dest('vendor/jquery'))
 
-    gulp.src(['node_modules/magnific-popup/dist/*'])
+    gulp.src([
+            'node_modules/magnific-popup/dist/*',
+            '!**/*.map'
+        ])
         .pipe(gulp.dest('vendor/magnific-popup'))
 
-    gulp.src(['node_modules/scrollreveal/dist/*.js'])
+    gulp.src([
+            'node_modules/scrollreveal/dist/*.js',
+            '!**/*.map'
+        ])
         .pipe(gulp.dest('vendor/scrollreveal'))
 
     gulp.src([
@@ -124,7 +152,10 @@ gulp.task('copy', function(done) {
             '!node_modules/font-awesome/.npmignore',
             '!node_modules/font-awesome/*.txt',
             '!node_modules/font-awesome/*.md',
-            '!node_modules/font-awesome/*.json'
+            '!node_modules/font-awesome/*.json',
+            '!**/*.less',
+            '!**/*.scss',
+            '!**/*.map'
         ])
         .pipe(gulp.dest('vendor/font-awesome'))
 
@@ -225,7 +256,7 @@ gulp.task('ftp-deploy-watch', gulp.series('configure', function() {
 }));
 
 // Build
-gulp.task('build', gulp.series('configure', 'less', 'minify-css', 'minify-js', 'copy'));
+gulp.task('build', gulp.series('configure', 'less', 'minify-css', 'minify-js', 'minify-html', 'copy'));
 
 // Run everything
 gulp.task('default', gulp.series('clean', 'build'));
@@ -241,10 +272,13 @@ gulp.task('default', gulp.series('clean', 'build'));
 // })
 
 // Dev task with browserSync
-gulp.task('dev', gulp.series('less', 'minify-css', 'minify-js', function(done) { //'browserSync',
+gulp.task('dev', gulp.series('less', 'minify-css', 'minify-js', 'minify-html', function(done) { //'browserSync',
     gulp.watch('less/*.less', ['less']);
     gulp.watch('css/*.css', ['minify-css']);
     gulp.watch('js/*.js', ['minify-js']);
+    gulp.watch('sections/*.html', ['minify-html']);
+    gulp.watch('*.html', ['minify-html']);
+    
     // Reloads the browser whenever HTML or JS files change
     //gulp.watch('*.html', browserSync.reload);
     //gulp.watch('js/**/*.js', browserSync.reload);

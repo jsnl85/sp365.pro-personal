@@ -170,11 +170,11 @@
 			'longtitle': true,
 			'theme': 'dark',
 			'onsuccess': function(googleUser) {
-				var profile = googleUser.getBasicProfile(), name = profile.getName(), email = profile.getEmail(), id = profile.getId(), imageUrl = profile.getImageUrl();
-				log('- signed-in as \''+ name +'\' (\''+ email +'\') (\''+ id +'\') (image:\''+ imageUrl +'\')');
+				var profile = googleUser.getBasicProfile(), email = profile.getEmail(), id = profile.getId(), fullName = profile.getName(), firstName = profile.getGivenName(), lastName = profile.getFamilyName(), imageUrl = profile.getImageUrl();
+				log('- signed-in as \''+ fullName +'\' (\''+ email +'\') (\''+ id +'\') (image:\''+ imageUrl +'\')');
 			},
 			'onfailure': function(error) {
-				log(error);
+				log('- sign-in failure', error);
 			}
 		});
 		// 
