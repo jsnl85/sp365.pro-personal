@@ -10,3 +10,9 @@ configuration.json
 add-ins/*/src/packages
 add-ins/*/src/*/Web.*.config
 *.pubxml*
+
+# Reason: auto-generated during gulp build
+*.min.html
+*.min.css
+*.min.js
+
