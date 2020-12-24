@@ -40,7 +40,7 @@
 					});
 				}
 				// Closes the Responsive Menu on Menu Item Click
-				$('.navbar-collapse ul li a').click(function() {
+				$('.navbar-collapse ul li a').on("click", function() {
 					$('.navbar-toggle:visible').click();
 				});
 				// Offset for Main Navigation
@@ -163,23 +163,28 @@
 		}
 	}
 	function onGooglePlatformLoad() {
-		function onSuccess(googleUser) {
-			var profile = googleUser.getBasicProfile(), name = profile.getName();
-			log('Logged in as \''+ name +'\'');
-		}
-		function onFailure(error) {
-			log(error);
-		}
-		// 
 		gapi.signin2.render('my-signin2', {
 			'scope': 'profile email',
 			'width': 240,
 			'height': 50,
 			'longtitle': true,
 			'theme': 'dark',
-			'onsuccess': onSuccess,
-			'onfailure': onFailure
+			'onsuccess': function(googleUser) {
+				var profile = googleUser.getBasicProfile(), name = profile.getName(), email = profile.getEmail(), id = profile.getId(), imageUrl = profile.getImageUrl();
+				log('- signed-in as \''+ name +'\' (\''+ email +'\') (\''+ id +'\') (image:\''+ imageUrl +'\')');
+			},
+			'onfailure': function(error) {
+				log(error);
+			}
 		});
+		// 
+		function signOut() {
+			var auth2 = gapi.auth2.getAuthInstance();
+			auth2.signOut().then(function() {
+				log('- signed-out');
+			});
+		}
+		$('.my-signout2').on('click', signOut);
 	}
 	// On DOM Load
 	window.onGooglePlatformLoad = onGooglePlatformLoad;
