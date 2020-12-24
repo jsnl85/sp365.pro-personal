@@ -185,9 +185,9 @@
 			gapi.load('auth2', function() {
 				var options = { client_id: clientId, }; // scope: scopes.join(' ') // this isn't required
 				gapi.auth2.init(options).then(function(auth2) {
-					log( "signed in: " + auth2.isSignedIn.get() );  
+					log('- signed-in with ' + auth2.isSignedIn.get());
 					auth2.isSignedIn.listen(onSignInSuccess);
-					var button = document.querySelector('#signInButton');
+					var button = document.querySelector('#my-signin2');
 					button.addEventListener('click', function() {
 						auth2.signIn();
 					});
@@ -202,7 +202,7 @@
 				var options = { client_id: clientId, scope: scopes.join(' '), width: 240, height: 50, longtitle: true, theme: 'dark', onsuccess: onSignInSuccess, onfailure: onSignInFailure, };
 				gapi.signin2.render('my-signin2', options);
 				// 
-				$('.my-signout2').on('click', signOut);
+				$('#my-signout2').on('click', signOut);
 			};
 		}
 	}
