@@ -8,7 +8,7 @@
 	if (typeof(jQuery)=='undefined' || !jQuery.fn) {log('jQuery is not included! Skipping template init!');return;}
 	var config = window.creative||{}, version = config.version||'1.0';
 
-	function initPageDynamicContentSections() {
+	function loadPageDynamicContentSections() {
 		/*// Initialise the Metatags section
 		getHtml("/seo/meta.min.html?v="+version, function(data) {
 			var $el = $('<div/>').html(data), html = $el.html();
@@ -162,36 +162,55 @@
 			});
 		}
 	}
-	function onGooglePlatformLoad() {
-		gapi.signin2.render('my-signin2', {
-			'scope': 'profile email',
-			'width': 240,
-			'height': 50,
-			'longtitle': true,
-			'theme': 'dark',
-			'onsuccess': function(googleUser) {
-				var profile = googleUser.getBasicProfile(), email = profile.getEmail(), id = profile.getId(), fullName = profile.getName(), firstName = profile.getGivenName(), lastName = profile.getFamilyName(), imageUrl = profile.getImageUrl();
-				log('- signed-in as \''+ fullName +'\' (\''+ email +'\') (\''+ id +'\') (image:\''+ imageUrl +'\')');
-			},
-			'onfailure': function(error) {
-				log('- sign-in failure', error);
-			}
-		});
+	function initGoogleSignIn() {
+		var clientId = '944442770750-m5vo8l1cbsapduiq2d0252h48h36kqne.apps.googleusercontent.com'; // <meta name="google-signin-client_id" content="944442770750-m5vo8l1cbsapduiq2d0252h48h36kqne.apps.googleusercontent.com">
+		var scopes = ['profile','email'];
 		// 
+		function onSignInSuccess(googleUser) {
+			var profile = googleUser.getBasicProfile(), email = profile.getEmail(), id = profile.getId(), fullName = profile.getName(), firstName = profile.getGivenName(), lastName = profile.getFamilyName(), imageUrl = profile.getImageUrl();
+			log('- signed-in as \''+ fullName +'\' (\''+ email +'\') (\''+ id +'\') (image:\''+ imageUrl +'\')');
+		}
+		function onSignInFailure(error) {
+			log('- sign-in failure', error);
+		}
 		function signOut() {
 			var auth2 = gapi.auth2.getAuthInstance();
 			auth2.signOut().then(function() {
 				log('- signed-out');
 			});
 		}
-		$('.my-signout2').on('click', signOut);
+		// 
+		// immediately, if Google API.js is loaded
+		if (typeof(gapi)!=='undefined') {
+			gapi.load('auth2', function() {
+				var options = { client_id: clientId, }; // scope: scopes.join(' ') // this isn't required
+				gapi.auth2.init(options).then(function(auth2) {
+					log( "signed in: " + auth2.isSignedIn.get() );  
+					auth2.isSignedIn.listen(onSignInSuccess);
+					var button = document.querySelector('#signInButton');
+					button.addEventListener('click', function() {
+						auth2.signIn();
+					});
+				});
+			});
+			// 
+			$('.my-signout2').on('click', signOut);
+		}
+		else {
+			// or alternatively, On Google Platform.js load
+			window.onGooglePlatformLoad = function onGooglePlatformLoad() {
+				var options = { client_id: clientId, scope: scopes.join(' '), width: 240, height: 50, longtitle: true, theme: 'dark', onsuccess: onSignInSuccess, onfailure: onSignInFailure, };
+				gapi.signin2.render('my-signin2', options);
+				// 
+				$('.my-signout2').on('click', signOut);
+			};
+		}
 	}
-	// On DOM Load
-	window.onGooglePlatformLoad = onGooglePlatformLoad;
 
 	// On DOM Load
 	$(function() {
-		initPageDynamicContentSections();
+		loadPageDynamicContentSections();
+		initGoogleSignIn();
 	});
 
 	// On Window Load
