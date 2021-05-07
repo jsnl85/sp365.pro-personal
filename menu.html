@@ -60,7 +60,7 @@
 </head>
 <body id="page-top">
 
-<iframe src="https://cdn.flipsnack.com/widget/v2/widget.html?hash=1n0xlfnd1j" width="100%" height="480" seamless="seamless" scrolling="no" frameborder="0" allowfullscreen="" style="min-height:480px;height:100%;"></iframe>
+<iframe id="menu" src="" width="100%" height="480" seamless="seamless" scrolling="no" frameborder="0" allowfullscreen="" style="min-height:480px;height:100%;display:none;"></iframe>
 
 <!-- jQuery -->
 <script src="/vendor/jquery/jquery.min.js"></script>
@@ -80,5 +80,9 @@
 <!-- Google SignIn JavaScript -->
 <script src="https://apis.google.com/js/platform.js?onload=onGooglePlatformLoad" async defer></script>
 
+<script>
+	(function(){var menu=document.getElementById('menu');menu.src='https://cdn.flipsnack.com/widget/v2/widget.html?hash=1n0xlfnd1j&ts='+Date.now();menu.style.display='';})();
+</script>
+	
 </body>
 </html>
