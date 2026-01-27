@@ -13,7 +13,7 @@ Have a bug or an issue with this template? [Open a new issue](https://github.com
 
 ## Creator
 
-sp365.pro is the personal website of **[Joao Lopes](https://sp365.pro/)**, a SharePoint & Office 365 Developer.
+sp365.pro is the personal website of **[Joao Lopes](https://sp365.pro/)**, a Microsoft 365 Developer.
 
 * https://twitter.com/jsnl85
 * https://github.com/jsnl85
