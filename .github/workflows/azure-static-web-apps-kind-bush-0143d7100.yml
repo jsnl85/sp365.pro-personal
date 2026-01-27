@@ -32,7 +32,7 @@ jobs:
           #app_artifact_location: "./" # Built app content directory - optional
           app_build_command: "npm run build" # App build command
           #api_build_command: "" # Api build command - optional
-          skip_app_build: true
+          skip_app_build: false
           skip_api_build: true
           ###### End of Repository/Build Configurations ######
 
