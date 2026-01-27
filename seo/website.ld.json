@@ -2,7 +2,7 @@
 	"@context": "http://schema.org",
 	"@type": "WebSite",
 	"name": "sp365.pro",
-	"description": "sp365.pro is a public Website promoting the work, projects and ideas of João Samuel Lopes. As a Microsoft 365 specialist with several years of professional experience, he provides Technical consulting services to businesses looking to turn an idea into an M365 enabled solution. Get in touch now!",
+	"description": "sp365.pro is a public Website promoting the work, projects and ideas of João Lopes. As a Microsoft 365 specialist with several years of professional experience, he provides Technical consulting services to businesses looking to turn an idea into an M365 enabled solution. Get in touch now!",
 	"url": "https://sp365.pro/",
 	"image": "https://sp365.pro/img/og-icon.jpg?v=1.3",
 	"logo": "https://sp365.pro/img/og-sp365-icon.jpg?v=1.3",
@@ -10,7 +10,7 @@
 	"copyrightHolder": {
 		"@type": "ProfessionalService",
 		"name": "sp365.pro",
-		"description": "sp365.pro is a public Website promoting the work, projects and ideas of João Samuel Lopes. As a Microsoft 365 specialist with several years of professional experience, he provides Technical consulting services to businesses looking to turn an idea into an M365 enabled solution. Get in touch now!",
+		"description": "sp365.pro is a public Website promoting the work, projects and ideas of João Lopes. As a Microsoft 365 specialist with several years of professional experience, he provides Technical consulting services to businesses looking to turn an idea into an M365 enabled solution. Get in touch now!",
 		"url": "https://sp365.pro",
 		"sameAs": ["joao&#46;samuel&#46;lopes&#64;&#103;mail&#46;com","https://www.linkedin.com/in/jsnl85","https://plus.google.com/112217109649379549944","https://github.com/jsnl85","https://www.facebook.com/joao.samuel.lopes","https://twitter.com/jsnl85","https://www.pinterest.com/joaosamuellopes"],
 		"telephone": "&#43;61&#32;401&#32;08&#51;&#32;982",
@@ -21,7 +21,7 @@
 		"location": {
 			"@type": "Place",
 			"name": "sp365.pro",
-			"description": "sp365.pro is a public Website promoting the work, projects and ideas of João Samuel Lopes. As a Microsoft 365 specialist with several years of professional experience, he provides Technical consulting services to businesses looking to turn an idea into an M365 enabled solution. Get in touch now!",
+			"description": "sp365.pro is a public Website promoting the work, projects and ideas of João Lopes. As a Microsoft 365 specialist with several years of professional experience, he provides Technical consulting services to businesses looking to turn an idea into an M365 enabled solution. Get in touch now!",
 			"telephone": "&#43;61&#32;401&#32;08&#51;&#32;982",
 			"image": "https://sp365.pro/img/og-icon.jpg?v=1.3",
 			"logo": "https://sp365.pro/img/og-sp365-icon.jpg?v=1.3",
@@ -57,5 +57,5 @@
 		},
 		"foundingDate": "2017"
 	},
-	"creator": {"@type":"Person","name":"João Samuel Lopes","image":"https://sp365.pro/img/profile.png?v1","gender":"Male"}
+	"creator": {"@type":"Person","name":"João Lopes","image":"https://sp365.pro/img/profile.png?v1","gender":"Male"}
 }
