@@ -1,20 +1,23 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
-  "name": "sp365pro-website",
-  "title": "sp365.pro website",
+  "name": "sp365pro-personal",
+  "title": "sp365.pro Personal Website",
   "version": "1.0.0",
   "description": "Personal Website",
-  "homepage": "https://sp365.pro",
+  "homepage": "https://jlopes.sp365.pro",
   "author": "Joao Lopes",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jsnl85/sp365.pro.git"
+    "url": "https://github.com/jsnl85/sp365.pro-personal.git"
+  },
+  "engines": {
+    "node": "^18.19.0",
+    "npm": "^10.2.3"
   },
   "scripts": {
     "build": "gulp build",
-    "clean": "gulp clean",
-    "test": "gulp test"
+    "clean": "gulp clean"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
